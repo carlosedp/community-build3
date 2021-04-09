@@ -14,12 +14,16 @@ def cachedSingle[V](dest: String)(op: => V)(using CacheDriver[String, V]): V =
 def cached[V, K](op: K => V)(using cacheDriver: CacheDriver[K, V]): K => V = 
   (k: K) => 
     val dest = cacheDriver.dest(k)
-    if Files.exists(dest) then cacheDriver.load(String(Files.readAllBytes(dest)), k)
-    else 
-      val res = op(k)
-      Files.createDirectories(dest.getParent)
-      Files.write(dest, cacheDriver.write(res).getBytes)
-      res
+    try
+      if Files.exists(dest) then cacheDriver.load(String(Files.readAllBytes(dest)), k)
+      else 
+        val res = op(k)
+        Files.createDirectories(dest.getParent)
+        Files.write(dest, cacheDriver.write(res).getBytes)
+        res
+    catch
+      case e: Throwable =>
+        throw new RuntimeException(s"When loading $dest", e)
 
 
 val dataPath = Paths.get("data")

@@ -35,7 +35,7 @@ def makeBuildPlan(depGraph: DependencyGraph): BuildPlan =
       if pvs.size == 1 then pvs.head.v
       else 
         val v = pvs.maxBy(patch).v // TODO make sure that we do built requested version!
-        println(s"Forcing version for $p to $v from: " + pvs.map(_.v))
+        println(s"Forcing version for $p to $v from: " + pvs.toSeq.map(_.v))
         v
     pvs.map(_ -> ProjectVersion(p, oVersion))
   }.toMap

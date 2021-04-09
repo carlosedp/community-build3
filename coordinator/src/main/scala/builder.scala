@@ -14,7 +14,7 @@ def flattenArgs(args: (String | Path | Option[String] | Seq[String])*) =
     case s: Seq[String] => s
   }
 
-def repo(step: BuildStep) = s"git@github.com:${step.p.org}/${step.p.name}.git"
+def repo(step: BuildStep) = s"https://github.com/${step.p.org}/${step.p.name}.git"
 
 val TagRef = """.+refs\/tags\/(.+)""".r
 
@@ -109,4 +109,23 @@ def buildProject(localScalaVersion: String, orgScalaVersion: String, step: Build
     steps <- buildPlan.steps.drop(1) // Dotty is build somewhere
     step <- steps  // if step.p.name == "processor"
   do buildProject(localScalaVersion,orgScalaVersion, step)
-  
+
+@main def buildPlanCSV: Unit = 
+  val orgScalaVersion = "3.0.0-RC2"
+  given ProcessLogger = ProcessLogger(s => println(s))
+
+
+  def projectConfig(p: BuildStep): Option[Seq[String]] = 
+    findTag(p) match 
+      case Left(msg) =>
+        println(s"No tags for $p")
+        None
+      case Right(tag) =>
+        val targets = p.targets.map(_.asMvnStr.stripSuffix("_" + orgScalaVersion)) 
+        Some(Seq[String](repo(p), tag, p.originalVersion) ++ targets)
+
+  val deps = loadDepenenecyGraph(orgScalaVersion)
+  val plan = makeBuildPlan(deps)
+  val csv = plan.steps.drop(1).flatten.flatMap(projectConfig).map(_.mkString(",")).mkString("\n")
+  Files.write(Paths.get("bp.csv"), csv.getBytes)
+  println(csv)
