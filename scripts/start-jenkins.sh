@@ -5,21 +5,21 @@ scriptDir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 source $scriptDir/utils.sh
 
 if [ -z "$CB_DOCKER_USERNAME" ]; then
-  echo >&2 "CB_DOCKER_USERNAME env variable has to be set"
+  echo >&2 "CB_DOCKER_USERNAME env variable has to be set and nonempty"
   exit 1
 fi
 
 if [ -z "$CB_DOCKER_PASSWORD" ]; then
-  echo >&2 "CB_DOCKER_PASSWORD env variable has to be set"
+  echo >&2 "CB_DOCKER_PASSWORD env variable has to be set and nonempty"
   exit 1
 fi
 
 if [ -z "$CB_K8S_NAMESPACE" ]; then
-  echo >&2 "CB_K8S_NAMESPACE env variable has to be set"
+  echo >&2 "CB_K8S_NAMESPACE env variable has to be set and nonempty"
   exit 1
 fi
 
-if [ -z "$CB_BUILD_CRON_TRIGGER" ]; then
+if [ -z "${CB_BUILD_CRON_TRIGGER+x}" ]; then
   echo >&2 "CB_BUILD_CRON_TRIGGER env variable has to be set"
   exit 1
 fi

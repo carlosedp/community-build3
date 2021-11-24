@@ -2,32 +2,32 @@
 set -e
 
 if [ -z "$CB_DOCKER_USERNAME" ]; then
-  echo >&2 "CB_DOCKER_USERNAME env variable has to be set"
+  echo >&2 "CB_DOCKER_USERNAME env variable has to be set and nonempty"
   exit 1
 fi
 
 if [ -z "$CB_DOCKER_PASSWORD" ]; then
-  echo >&2 "CB_DOCKER_PASSWORD env variable has to be set"
+  echo >&2 "CB_DOCKER_PASSWORD env variable has to be set and nonempty"
   exit 1
 fi
 
 if [ -z "$CB_LICENSE_CLIENT" ]; then
-  echo >&2 "CB_LICENSE_CLIENT env variable has to be set"
+  echo >&2 "CB_LICENSE_CLIENT env variable has to be set and nonempty"
   exit 1
 fi
 
 if [ -z "$CB_LICENSE_KEY" ]; then
-  echo >&2 "CB_LICENSE_KEY env variable has to be set"
+  echo >&2 "CB_LICENSE_KEY env variable has to be set and nonempty"
   exit 1
 fi
 
 if [ -z "$CB_K8S_JENKINS_OPERATOR_NAMESPACE" ]; then
-  echo >&2 "CB_K8S_JENKINS_OPERATOR_NAMESPACE env variable has to be set"
+  echo >&2 "CB_K8S_JENKINS_OPERATOR_NAMESPACE env variable has to be set and nonempty"
   exit 1
 fi
 
 if [ -z "$CB_K8S_NAMESPACE" ]; then
-  echo >&2 "CB_K8S_NAMESPACE env variable has to be set"
+  echo >&2 "CB_K8S_NAMESPACE env variable has to be set and nonempty"
   exit 1
 fi
 

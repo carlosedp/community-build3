@@ -1,6 +1,9 @@
 // Look at initializeSeedJobs.groovy for how this file gets parameterized
 
 pipeline {
+    options {
+        timeout(time: 30, unit: "MINUTES")
+    }
     agent none
     stages {
         stage("Initialize build") {
@@ -21,7 +24,7 @@ pipeline {
                         spec:
                           containers:
                           - name: coordinator
-                            image: virtuslab/scala-community-build-coordinator:v0.0.1
+                            image: virtuslab/scala-community-build-coordinator:v0.0.2
                             imagePullPolicy: IfNotPresent
                             command:
                             - cat

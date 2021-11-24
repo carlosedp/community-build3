@@ -1,6 +1,6 @@
 function scbk() {
   if [ -z "$CB_K8S_NAMESPACE" ]; then
-    echo >&2 "CB_K8S_NAMESPACE env variable has to be set"
+    echo >&2 "CB_K8S_NAMESPACE env variable has to be set and nonempty"
     exit 1
   fi
 
@@ -9,7 +9,7 @@ function scbk() {
 
 function scbok() {
   if [ -z "$CB_K8S_JENKINS_OPERATOR_NAMESPACE" ]; then
-    echo >&2 "CB_K8S_JENKINS_OPERATOR_NAMESPACE env variable has to be set"
+    echo >&2 "CB_K8S_JENKINS_OPERATOR_NAMESPACE env variable has to be set and nonempty"
     exit 1
   fi
 

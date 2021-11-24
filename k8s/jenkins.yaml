@@ -147,6 +147,8 @@ jenkins:
       version: "0.34"
     - name: matrix-auth
       version: "2.6.8"
+    - name: rebuild
+      version: "1.32"
     - name: configuration-as-code
       version: "1.54"
     - name: git-client
